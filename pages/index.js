@@ -1,5 +1,8 @@
+import { useRouter } from "next/router";
+
 export default function Home() {
-  return (
-    <div>Home</div>
-  )
+  const router = useRouter();
+
+  console.log(router.query);
+  return <div>Home</div>;
 }

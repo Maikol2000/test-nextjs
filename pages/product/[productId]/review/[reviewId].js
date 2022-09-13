@@ -1,11 +1,17 @@
-import { useRouter } from 'next/router'
-import React from 'react'
+import { useRouter } from "next/router";
+import React from "react";
 
 export default function Review() {
-    const router = useRouter()
+  const router = useRouter();
+  const { productId, reviewId } = router.query;
 
-    const {productId, reviewId} = router.query
+  const style = {
+    color: router.asPath.reviewId === '1' ? 'red' : 'pink',
+  }
+
   return (
-    <div>Review {reviewId}, product {productId}</div>
-  )
+    <div className={style}>
+      Review {reviewId}, product {productId}
+    </div>
+  );
 }
