@@ -23,5 +23,7 @@ export const getStaticProps = async () => {
     props: {
       blogList: data.data,
     },
+    // sau 10s thì bên client mới nhận được request mới
+    revalidate: 10
   };
 };
