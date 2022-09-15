@@ -1,7 +1,43 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
+import { GetStaticPaths, GetStaticProps, GetServerSideProps } from "next";
 
-export const getStaticPaths = async () => {
+type Resp = {
+  loginData: string;
+  code: string;
+  success: true;
+  message: string;
+  messages: [string];
+  errors: [
+    {
+      property: string;
+      message: string;
+    }
+  ];
+  data: Data;
+};
+
+type Data = {
+  title: string;
+  titleTag: string;
+  content: string;
+  isPublic: true;
+  description: string;
+  id: number;
+  createdDate: string;
+  updatedDate: string;
+  createdByName: string;
+  published: true;
+  slug: string;
+  thumbPhotoUrl: string;
+};
+
+type Props = {
+  about: Resp;
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
   const resp = await fetch(
     "https://api-test.erm1.com/cms/blog/articles?pageIndex=0&pageSize=10",
     {
@@ -40,8 +76,8 @@ export const getStaticPaths = async () => {
   // };
 };
 
-export const getStaticProps = async (context) => {
-  const { slug } = context.params;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const slug = params?.slug;
 
   const options = {
     method: "post",
@@ -75,7 +111,7 @@ export const getStaticProps = async (context) => {
   };
 };
 
-export default function AboutDetail({ about }) {
+export default function AboutDetail({ about }: Props) {
   const router = useRouter();
   const data = about?.data;
 
@@ -85,7 +121,7 @@ export default function AboutDetail({ about }) {
 
   return (
     <div>
-      <p>{data?.slug}</p>
+      <p>{data.slug}</p>
       <Link href={"/blog"}>Back</Link>
     </div>
   );
